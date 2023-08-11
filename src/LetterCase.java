@@ -1,0 +1,278 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
+
+public class LetterCase {
+
+    /*
+    Title case (capital case, headline style)
+    "The Quick Brown Fox Jumps over the Lazy Dog"
+
+    Sentence case
+    "The quick brown fox jumps over the lazy dog"
+
+    Start case (First letter of each word capitalized)
+    "The Quick Brown Fox Jumps Over The Lazy Dog"
+
+    All uppercase
+    "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"
+
+    All lowercase
+    "the quick brown fox jumps over the lazy dog"
+
+    Camel case
+    "theQuickBrownFoxJumpsOverTheLazyDog"
+
+    Pascal Case
+    "TheQuickBrownFoxJumpsOverTheLazyDog"
+
+    Snake case
+    "the_quick_brown_fox_jumps_over_the_lazy_dog"
+
+    Kebab case
+    "the-quick-brown-fox-jumps-over-the-lazy-dog"
+
+    Studly caps
+    "tHeqUicKBrOWnFoXJUmpsoVeRThElAzydOG"
+
+    Reading mode
+    "The quick brown fox jumps over the lazy dog"
+     */
+
+    private static LinkedList words(String txt) {
+
+        LinkedList<String> words = new LinkedList<>();
+
+        for (String word : txt.split(" ")) {
+            words.addLast(word);
+        }
+        return words;
+    }
+
+    private static String capitalize(String txt) {
+        return txt.substring(0, 1).toUpperCase() + txt.substring(1);
+    }
+
+    private static String sentenceToString(LinkedList sentence) {
+
+        String txt = "";
+        for (int i = 0; i < sentence.size(); i++) {
+
+            if (i < sentence.size() - 1) {
+                txt = txt + sentence.get(i).toString() + " ";
+            } else txt = txt + sentence.get(i).toString();
+
+        }
+        return txt;
+    }
+
+
+    public static String titleCase(String txt) {
+
+        ArrayList<String> articles = new ArrayList<>();
+        articles.add("a");
+        articles.add("an");
+        articles.add("the");
+
+        ArrayList<String> conjunctions = new ArrayList<>();
+        conjunctions.add("and");
+        conjunctions.add("or");
+        conjunctions.add("if");
+        conjunctions.add("nor");
+        conjunctions.add("so");
+        conjunctions.add("yet");
+
+        ArrayList<String> prepositions = new ArrayList<>();
+        prepositions.add("of");
+        prepositions.add("with");
+        prepositions.add("at");
+        prepositions.add("from");
+        prepositions.add("into");
+        prepositions.add("during");
+        prepositions.add("including");
+        prepositions.add("until");
+        prepositions.add("against");
+        prepositions.add("among");
+        prepositions.add("throughout");
+        prepositions.add("despite");
+        prepositions.add("towards");
+        prepositions.add("upon");
+        prepositions.add("concerning");
+        prepositions.add("to");
+        prepositions.add("in");
+        prepositions.add("for");
+        prepositions.add("on");
+        prepositions.add("by");
+        prepositions.add("about");
+        prepositions.add("like");
+        prepositions.add("through");
+        prepositions.add("over");
+        prepositions.add("before");
+        prepositions.add("between");
+        prepositions.add("after");
+        prepositions.add("since");
+        prepositions.add("without");
+        prepositions.add("under");
+        prepositions.add("within");
+        prepositions.add("along");
+        prepositions.add("following");
+        prepositions.add("across");
+        prepositions.add("behind");
+        prepositions.add("beyond");
+        prepositions.add("plus");
+        prepositions.add("except");
+        prepositions.add("but");
+        prepositions.add("up");
+        prepositions.add("out");
+        prepositions.add("around");
+        prepositions.add("down");
+        prepositions.add("off");
+        prepositions.add("above");
+        prepositions.add("near");
+        prepositions.add("as");
+        prepositions.add("per");
+        prepositions.add("via");
+
+        ArrayList exceptions = new ArrayList();
+        exceptions.addAll(articles);
+        exceptions.addAll(conjunctions);
+        exceptions.addAll(prepositions);
+
+        LinkedList sentence = new LinkedList();
+        sentence = (LinkedList) words(txt).clone();
+
+        for (int i = 0; i < sentence.size(); i++) {
+
+            if (Character.isUpperCase(sentence.get(i).toString().charAt(0))) {
+
+                continue;
+
+            } else {
+
+                if (i == 0) {
+                    sentence.set(0, capitalize(sentence.get(0).toString()));
+                    //capitalize first word
+                } else if (exceptions.contains(sentence.get(i).toString()) || exceptions.contains(sentence.get(i).toString().toLowerCase()) || sentence.get(i).toString().length() < 4) {
+                    sentence.set(i, sentence.get(i).toString().toLowerCase());
+                    //lowercase exceptions words
+                } else sentence.set(i, capitalize(sentence.get(i).toString()));
+                //capitalize another words
+
+                if (sentence.get(i).toString().contains("-")) {
+                    sentence.set(i, sentence.get(i).toString().substring(0, sentence.get(i).toString().indexOf("-") + 1) + sentence.get(i).toString().substring(sentence.get(i).toString().indexOf("-") + 1).toLowerCase());
+                }
+                //hyphenated words format :Mid-year
+            }
+        }
+        return sentenceToString(sentence);
+    }
+
+    public static String sentenceCase(String txt) {
+
+        StringBuilder newSentense = new StringBuilder();
+
+        for (int i = 0; i < txt.length(); i++) {
+            char c = txt.charAt(i);
+            if (i == 0)
+                newSentense.append(c);
+            else {
+                if (Character.isUpperCase(c) && txt.charAt(i - 1) == 32) {
+                    newSentense.append(c);
+                    continue;
+                } else {
+
+                    newSentense.append(Character.toLowerCase(c));
+                }
+            }
+        }
+
+        return capitalize(newSentense.toString());
+    }
+
+
+
+    public static String startCase(String txt) {
+
+        LinkedList sentence = new LinkedList();
+        sentence = (LinkedList) words(txt).clone();
+
+        for (int i = 0; i < sentence.size(); i++) {
+            sentence.set(i, capitalize(sentence.get(i).toString()));
+        }
+        return sentenceToString(sentence);
+    }
+
+    public static String allUppercase(String txt) {
+        return txt.toUpperCase();
+    }
+
+    public static String allLowercase(String txt) {
+        return txt.toLowerCase();
+    }
+
+    public static String camelCase(String txt) {
+
+        LinkedList sentence = new LinkedList();
+        sentence = (LinkedList) words(txt).clone();
+
+        for (int i = 0; i < sentence.size(); i++) {
+
+            if (i == 0) {
+                sentence.set(i, sentence.get(i).toString().toLowerCase());
+            } else sentence.set(i, capitalize(sentence.get(i).toString()));
+        }
+        return sentenceToString(sentence).replace(" ", "");
+    }
+
+
+    public static String pascalCase(String txt) {
+
+        LinkedList sentence = new LinkedList();
+        sentence = (LinkedList) words(txt).clone();
+
+        for (int i = 0; i < sentence.size(); i++) {
+            sentence.set(i, capitalize(sentence.get(i).toString()));
+        }
+        return sentenceToString(sentence).replace(" ", "");
+    }
+
+    public static String snakeCase(String txt) {
+
+        LinkedList sentence = new LinkedList();
+        sentence = (LinkedList) words(txt).clone();
+
+        for (int i = 0; i < sentence.size(); i++) {
+            sentence.set(i, sentence.get(i).toString().toLowerCase());
+        }
+        return sentenceToString(sentence).replace(" ", "_");
+    }
+
+    public static String kebabCase(String txt) {
+
+        LinkedList sentence = new LinkedList();
+        sentence = (LinkedList) words(txt).clone();
+
+        for (int i = 0; i < sentence.size(); i++) {
+            sentence.set(i, sentence.get(i).toString().toLowerCase());
+        }
+        return sentenceToString(sentence).replace(" ", "-");
+    }
+
+    public static String studlyCaps(String txt) {
+
+        Random random = new Random(256);
+
+        char[] letters = txt.toCharArray();
+        StringBuilder sb = new StringBuilder(letters.length);
+        for (int i = 0; i < letters.length; i++) {
+
+            if (random.nextBoolean()) {
+                sb.append(Character.toLowerCase(letters[i]));
+            } else {
+                sb.append(Character.toUpperCase(letters[i]));
+            }
+
+        }
+        return sb.toString();
+    }
+}

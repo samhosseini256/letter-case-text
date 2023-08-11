@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="LetterCase:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LetterCase_jar</output-path>
+    <root id="archive" name="LetterCase.jar">
+      <element id="module-output" name="LetterCase" />
+    </root>
+  </artifact>
+</component>
